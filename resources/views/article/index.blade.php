@@ -1,31 +1,21 @@
-@extends('app')
-
-@section('title', 'Articles')
+@extends('layouts.app')
 
 @section('content')
-<h2>Ditech Articles</h2>
-
-@error('title') {{$message}} @enderror
-@error('description') {{$message}} @enderror
-@error('content') {{$message}} @enderror
-
-<form method="POST" action="/article">
-    <label>Title</label>
-    <input type="text" name="title" autocomplete="off"/>
-    <label>Description</label>
-    <input type="text" name="description" autocomplete="off"/>
-    <label>Content</label>
-    <input type="text" name="content" autocomplete="off"/>
-    @csrf
-    <button>Add article</button>
-</form>
-
-<ul>
-    @forelse($articles as $article)
-    <li>{{ $article->title }}</li>
-    @empty
-    <li>No services</li>
-    @endforelse
-</ul>
-
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 d-flex justify-content-center mb-5">
+            @foreach($articles as $article)
+              <div class="col-md-6">
+                <div class="card-body">
+                    <h5 class="card-title">{{ $article->title }}</h5>
+                      <h6 class="card-subtitle mb-4 text-muted">{{ $article->description }}</h6>
+                      <a href="#" class="card-link">Details</a>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</div>
 @endsection
+
+

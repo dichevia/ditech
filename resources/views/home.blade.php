@@ -14,7 +14,8 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    <a href="/categories/create" class="btn btn-link">Create new category</a>
+                    <a href="/articles/create" class="btn btn-link">Create new article</a>
                 </div>
             </div>
         </div>
