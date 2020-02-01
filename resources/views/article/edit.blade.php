@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Create article</div>
+                <div class="card-header">Edit article</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -20,10 +20,10 @@
                         @endforeach
                         @endif
 
-                    <form method="POST" action="/articles">
-
-                        @include('article.form')
-                        <button type="submit" class="btn btn-primary">Create article</button>
+                    <form method="POST" action="/articles/{{$article->id}}">
+                        @method('PATCH')
+                        @include ('article.form')
+                        <button type="submit" class="btn btn-primary">Edit article</button>
                     </form>
 
                 </div>

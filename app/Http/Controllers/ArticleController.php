@@ -39,7 +39,7 @@ class ArticleController extends Controller
 
         $article = auth()->user()->articles()->create($data);
 
-        return redirect('articles/' . $article->id);
+        return redirect('/articles/' . $article->id);
     }
 
     public function show($articleId)
@@ -47,5 +47,34 @@ class ArticleController extends Controller
         $article = \App\Article::findOrFail($articleId);
 
         return view('article.show', compact('article'));
+    }
+
+    public function edit($articleId){
+
+        $article = \App\Article::findOrFail($articleId);
+
+        return view('article.edit', compact('article'));
+    }
+
+    public function update ($articleId){
+
+        $data = request()->validate([
+            'title' => 'required|min:3',
+            'description' => 'required|min:5|max:30',
+            'content' => 'required|min:10',
+        ]);
+
+        $article = \App\Article::findOrFail($articleId);
+        $article->update($data);
+
+        return redirect('/articles/'.$article->id);
+    }
+
+    public function destroy($articleId){
+
+        $article = \App\Article::findOrFail($articleId);
+        $article->delete();
+
+        return redirect('/articles/');
     }
 }

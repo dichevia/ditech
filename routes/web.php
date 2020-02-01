@@ -21,6 +21,9 @@ Route::get('/articles', 'ArticleController@index');
 Route::get('/articles/create', 'ArticleController@create');
 Route::post('/articles', 'ArticleController@store');
 Route::get('/articles/{articledId}', 'ArticleController@show');
+Route::get('/articles/{articleId}/edit', 'ArticleController@edit');
+Route::patch('/articles/{articleId}', 'ArticleController@update');
+Route::delete('/articles/{articleId}', 'ArticleController@destroy');
 
 Route::get('/categories', 'CategoryController@index');
 Route::get('categories/create', 'CategoryController@create');

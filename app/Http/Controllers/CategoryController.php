@@ -68,7 +68,7 @@ class CategoryController extends Controller
 
         $category->delete();
 
-        return redirect('/categories');
+        return redirect('/categories/');
     }
 
     protected function validateData(){
