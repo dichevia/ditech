@@ -10,4 +10,14 @@
     <label for="content">Content</label>
     <textarea class="form-control" name="content" id="content" rows="3">{{ old('content') ?? $article->content ?? ''}}</textarea>
   </div>
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <label class="input-group-text" for="inputGroupSelect01">Category</label>
+    </div>
+    <select class="custom-select" id="category" name="category_id">
+        @foreach($categories as $category)
+        <option value="{{ $category->id }}">{{$category->name}}</option>
+        @endforeach
+    </select>
+  </div>
 @csrf

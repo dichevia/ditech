@@ -20,9 +20,9 @@ class ArticleController extends Controller
 
     public function create()
     {
+        $categories = \App\Category::all();
 
-
-        return view('article.create');
+        return view('article.create', compact('categories'));
     }
 
     public function store()
@@ -31,10 +31,10 @@ class ArticleController extends Controller
             'title' => 'required|min:3',
             'description' => 'required|min:5|max:30',
             'content' => 'required|min:10',
+            'category_id' => 'required'
         ]);
 
         // $data['user_id'] = auth()->user()->id;
-
         // $article = \App\Article::create($data);
 
         $article = auth()->user()->articles()->create($data);
@@ -52,8 +52,9 @@ class ArticleController extends Controller
     public function edit($articleId){
 
         $article = \App\Article::findOrFail($articleId);
+        $categories = \App\Category::all();
 
-        return view('article.edit', compact('article'));
+        return view('article.edit', compact('article', 'categories'));
     }
 
     public function update ($articleId){
@@ -62,6 +63,7 @@ class ArticleController extends Controller
             'title' => 'required|min:3',
             'description' => 'required|min:5|max:30',
             'content' => 'required|min:10',
+            'category_id' => 'required'
         ]);
 
         $article = \App\Article::findOrFail($articleId);
