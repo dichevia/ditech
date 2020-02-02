@@ -2,20 +2,26 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8 d-flex justify-content-center mb-5">
-            @foreach($articles as $article)
-              <div class="col-md-6">
-                <div class="card-body">
-                    <h5 class="card-title">{{ $article->title }}</h5>
-                      <h6 class="card-subtitle mb-4 text-muted">{{ $article->description }}</h6>
-                <a href="/articles/{{$article->id}}" class="card-link">Details</a>
-                </div>
-            </div>
-            @endforeach
+
+    <h1 class="my-4">All articles</h1>
+
+    <div class="row">
+        @foreach($articles as $article)
+      <div class="col-lg-4 mb-4">
+
+        <div class="card h-100">
+          <a href="#"><img class="card-img-top" src="{{ asset($article->image)}}"    alt=""></a>
+          <div class="card-body">
+            <h4 class="card-title">
+              <a href="#">{{ $article->title }}</a>
+            </h4>
+            <p class="card-text">{{ $article->description }}</p>
+          </div>
         </div>
+
+      </div>
+      @endforeach
     </div>
-</div>
+
+  </div>
 @endsection
-
-

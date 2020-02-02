@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Traits\UploadTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ArticleController extends Controller
 {
+    use UploadTrait;
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -31,8 +35,24 @@ class ArticleController extends Controller
             'title' => 'required|min:3',
             'description' => 'required|min:5|max:30',
             'content' => 'required|min:10',
-            'category_id' => 'required'
+            'category_id' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
+
+        if(request()->has('image')){
+            //get image file
+            $image = request()->file('image');
+            //make image name base on article title and current timestamp
+            $name = Str::slug(request()->input('title').'_'.time());
+            //folder path
+            $folder = '/uploads/images/article/';
+            //file path where image is stored
+            $filePath = $folder.$name.'.'.$image->getClientOriginalExtension();
+            //upload image
+            $this->uploadOne($image, $folder, 'public', $name);
+            //Set article image path in database to filePath
+            $data['image'] = $filePath;
+        }
 
         // $data['user_id'] = auth()->user()->id;
         // $article = \App\Article::create($data);

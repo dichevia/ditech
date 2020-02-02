@@ -20,7 +20,7 @@
                         @endforeach
                         @endif
 
-                    <form method="POST" action="/articles">
+                    <form method="POST" action="/articles" enctype="multipart/form-data">
 
                         @include('article.form')
                         <button type="submit" class="btn btn-primary">Create article</button>
