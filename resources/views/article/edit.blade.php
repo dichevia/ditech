@@ -20,7 +20,7 @@
                         @endforeach
                         @endif
 
-                    <form method="POST" action="/articles/{{$article->id}}">
+                    <form method="POST" action="/articles/{{$article->id}}" enctype="multipart/form-data">
                         @method('PATCH')
                         @include ('article.form')
                         <button type="submit" class="btn btn-primary">Edit article</button>

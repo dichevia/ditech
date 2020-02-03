@@ -15,7 +15,8 @@ class ArticleController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(){
+    public function index()
+    {
 
         $articles = \App\Article::all();
 
@@ -31,27 +32,10 @@ class ArticleController extends Controller
 
     public function store()
     {
-        $data = request()->validate([
-            'title' => 'required|min:3',
-            'description' => 'required|min:5|max:30',
-            'content' => 'required|min:10',
-            'category_id' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
-        ]);
+        $data = $this->validateData();
 
-        if(request()->has('image')){
-            //get image file
-            $image = request()->file('image');
-            //make image name base on article title and current timestamp
-            $name = Str::slug(request()->input('title').'_'.time());
-            //folder path
-            $folder = '/uploads/images/article/';
-            //file path where image is stored
-            $filePath = $folder.$name.'.'.$image->getClientOriginalExtension();
-            //upload image
-            $this->uploadOne($image, $folder, 'public', $name);
-            //Set article image path in database to filePath
-            $data['image'] = $filePath;
+        if (request()->has('image')) {
+            $data = $this->processImage($data);
         }
 
         // $data['user_id'] = auth()->user()->id;
@@ -69,7 +53,8 @@ class ArticleController extends Controller
         return view('article.show', compact('article'));
     }
 
-    public function edit($articleId){
+    public function edit($articleId)
+    {
 
         $article = \App\Article::findOrFail($articleId);
         $categories = \App\Category::all();
@@ -77,26 +62,55 @@ class ArticleController extends Controller
         return view('article.edit', compact('article', 'categories'));
     }
 
-    public function update ($articleId){
+    public function update($articleId)
+    {
 
-        $data = request()->validate([
-            'title' => 'required|min:3',
-            'description' => 'required|min:5|max:30',
-            'content' => 'required|min:10',
-            'category_id' => 'required'
-        ]);
+        $data = $this->validateData();
+
+        if (request()->has('image')) {
+            $data = $this->processImage($data);
+        }
 
         $article = \App\Article::findOrFail($articleId);
         $article->update($data);
 
-        return redirect('/articles/'.$article->id);
+        return redirect('/articles/' . $article->id);
     }
 
-    public function destroy($articleId){
+    public function destroy($articleId)
+    {
 
         $article = \App\Article::findOrFail($articleId);
         $article->delete();
 
         return redirect('/articles/');
+    }
+
+    protected function validateData()
+    {
+        return request()->validate([
+            'title' => 'required|min:3',
+            'description' => 'required|min:5|max:30',
+            'content' => 'required|min:10',
+            'category_id' => 'required',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
+    }
+
+    protected function processImage($data){
+        //get image file
+        $image = request()->file('image');
+        //make image name base on article title and current timestamp
+        $name = Str::slug(request()->input('title') . '_' . time());
+        //folder path
+        $folder = '/uploads/images/article/';
+        //file path where image is stored
+        $filePath = $folder . $name . '.' . $image->getClientOriginalExtension();
+        //upload image
+        $this->uploadOne($image, $folder, 'public', $name);
+        //Set article image path in database to filePath
+        $data['image'] = $filePath;
+
+        return $data;
     }
 }
