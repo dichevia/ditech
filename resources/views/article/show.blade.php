@@ -9,11 +9,11 @@
                 <div class="card-body">
                 <h6 class="card-subtitle mb-2 text-muted">{{ $article->description }}</h6>
                 <p class="card-text"> {{ $article->content }}</p>
-                <a class="btn btn-primary"  href="/articles/{{ $article->id }}/edit" class="card-link">Edit</a>
-                <form method="POST" action="/articles/{{ $article->id }}">
+                <a class="btn btn-primary btn-sm"  href="/articles/{{ $article->id }}/edit" class="card-link">Edit</a>
+                <form class="btn" method="POST" action="/articles/{{ $article->id }}">
                     @method('DELETE')
                     @csrf
-                    <button class="btn btn-danger">Delete</button>
+                    <button class="btn btn-danger btn-sm">Delete</button>
                 </form>
                 </div>
             </div>

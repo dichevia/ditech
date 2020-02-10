@@ -59,6 +59,7 @@ class ArticleController extends Controller
         $article = \App\Article::findOrFail($articleId);
         $categories = \App\Category::all();
 
+
         return view('article.edit', compact('article', 'categories'));
     }
 
