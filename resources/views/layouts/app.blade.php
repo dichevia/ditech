@@ -17,11 +17,11 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/darkly/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-white bg-dark shadow">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Ditech') }}
@@ -60,7 +60,11 @@
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
-
+                                    @can('manage-users')
+                                    <a class="dropdown-item" href="{{ route('admin.users.index') }}">
+                                        User Management
+                                    </a>
+                                    @endcan
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
@@ -77,4 +81,15 @@
         </main>
     </div>
 </body>
+<!-- Footer -->
+<footer class="page-footer font-small blue">
+
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">© 2020 Copyright:
+      <a href="#"> Ditech</a>
+    </div>
+    <!-- Copyright -->
+
+  </footer>
+  <!-- Footer -->
 </html>

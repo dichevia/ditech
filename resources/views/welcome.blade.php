@@ -22,18 +22,21 @@
     <!-- /.row -->
 
     <!-- Call to Action Well -->
+    @guest
     <div class="card text-white bg-secondary my-5 py-4 text-center">
         <div class="card-body">
             <p class="text-white m-0">To use full functionality of the site please <a href="/register">register</a> or
                 <a href="/login">login</a> to our system!</p>
         </div>
     </div>
+    @endguest
 
     <!-- Content Row -->
     <div class="row">
         @foreach($articles as $article)
         <div class="col-md-4 mb-5">
             <div class="card h-100">
+            <img class="card-img-top" src="{{ $article->image }}" alt="Card image cap">
                 <div class="card-body">
                     <h2 class="card-title">{{ $article->title }}</h2>
                     <p class="card-text">{{ $article->description }}</p>

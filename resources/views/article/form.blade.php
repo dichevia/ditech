@@ -17,9 +17,11 @@
     <select class="custom-select" id="category" name="category_id">
         @foreach($categories as $category)
             <option value="{{ $category->id }}"
-                @if ($category->id == old('category_id', $article->category_id))
+                @isset($article)
+                @if ($category->id == $article->category_id)
                 selected="selected"
                 @endif
+                @endisset
                 >{{ $category->name }}</option>
         @endforeach
     </select>
